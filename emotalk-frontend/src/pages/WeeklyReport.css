@@ -1,0 +1,130 @@
+/* ============================= */
+/* WEEKLY REPORT PAGE */
+/* ============================= */
+
+.weekly-report-page {
+    max-width: 900px;
+    margin: auto;
+    padding: 28px;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f9fafb, #ffffff);
+  }
+  
+  .weekly-report-page h2 {
+    margin-bottom: 4px;
+  }
+  
+  .weekly-report-subtitle {
+    color: #6b7280;
+    margin-bottom: 22px;
+  }
+  
+  /* ============================= */
+  /* SUMMARY CARD */
+  /* ============================= */
+  
+  .weekly-summary-card {
+    background: linear-gradient(180deg, #ffffff, #f0fdf9);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .weekly-dominant {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+  
+  .weekly-dominant .emoji {
+    font-size: 52px;
+  }
+  
+  .weekly-dominant .emotion-name {
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  
+  /* ============================= */
+  /* DISTRIBUTION */
+  /* ============================= */
+  
+  .weekly-distribution h4 {
+    margin-bottom: 12px;
+  }
+  
+  .distribution-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+  }
+  
+  .distribution-item {
+    background: #f9fafb;
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  /* ============================= */
+  /* WEEKLY GRAPH */
+  /* ============================= */
+  
+  .weekly-graph-card {
+    background: white;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.07);
+    margin-bottom: 24px;
+  }
+  
+  .weekly-graph-card h4 {
+    margin-bottom: 12px;
+  }
+  
+  .weekly-day-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 8px;
+  }
+  
+  /* ============================= */
+  /* INFO CARDS */
+  /* ============================= */
+  
+  .weekly-info-card {
+    background: white;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.07);
+    margin-bottom: 20px;
+  }
+  
+  .weekly-info-card h4 {
+    margin-bottom: 8px;
+  }
+  
+  .weekly-info-card p {
+    color: #374151;
+    line-height: 1.6;
+  }
+  
+  /* ============================= */
+  /* NAVIGATION */
+  /* ============================= */
+  
+  .weekly-back-btn {
+    margin-top: 12px;
+    display: inline-block;
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  

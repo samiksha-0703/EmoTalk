@@ -1,0 +1,101 @@
+/* PAGE */
+.resources-page {
+  max-width: 1080px;
+  margin: auto;
+  padding: 48px 32px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fafc, #ffffff);
+}
+
+/* HEADER */
+.resources-header {
+  max-width: 720px;
+  margin-bottom: 56px;
+}
+
+.resources-header h2 {
+  color: #1f2933;
+}
+
+.resources-header p {
+  color: #6b7280;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* SECTIONS */
+.resource-section {
+  margin-bottom: 64px;
+}
+
+.resource-section h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* COLOR ACCENTS */
+.resource-section.books h3 {
+  color: #1d4ed8; /* blue */
+}
+
+.resource-section.audio h3 {
+  color: #047857; /* green */
+}
+
+.resource-section.videos h3 {
+  color: #7c3aed; /* purple */
+}
+
+/* GRID */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* CARD */
+.resource-card {
+  background: #ffffff;
+  padding: 24px 26px;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.resource-card:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* TEXT */
+.resource-card h4 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.description {
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+/* LINKS */
+.resource-card a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.resource-card a:hover {
+  text-decoration: underline;
+}
+
+/* AUDIO */
+.audio-player {
+  width: 100%;
+  margin-top: 10px;
+  accent-color: #047857;
+}

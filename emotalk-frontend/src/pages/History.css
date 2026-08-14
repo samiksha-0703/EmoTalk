@@ -1,0 +1,109 @@
+/* PAGE */
+.graph-page {
+    max-width: 950px;
+    margin: auto;
+    padding: 28px;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f5f7ff, #ffffff);
+    font-family: Inter, sans-serif;
+  }
+  
+  /* HEADER */
+  .subtitle {
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  /* BACK */
+  .back-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  /* EMPTY */
+  .empty {
+    text-align: center;
+    margin-top: 50px;
+    color: #999;
+  }
+  
+  /* GRAPH CARD */
+  .graph-container {
+    background: linear-gradient(180deg, #ffffff, #f8f9ff);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* LINE DRAW */
+  .mood-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawLine 1.8s ease-out forwards;
+  }
+  
+  @keyframes drawLine {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  /* EMOJI POP */
+  .emoji-point {
+    opacity: 0;
+    transform: scale(0.5);
+    animation: emojiPop 0.4s ease-out forwards;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.25));
+  }
+  
+  @keyframes emojiPop {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* TIME */
+  .time-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #777;
+  }
+  
+  /* DAY PHASE BAR */
+  .day-phase-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding: 12px;
+    border-radius: 14px;
+    background: linear-gradient(
+      90deg,
+      #ffe0b2,
+      #fff9c4,
+      #ffccbc,
+      #d1c4e9
+    );
+  }
+  
+  .day-phase {
+    text-align: center;
+    flex: 1;
+  }
+  
+  .phase-icon {
+    font-size: 22px;
+    display: block;
+  }
+  
+  .phase-label {
+    font-size: 12px;
+    color: #444;
+  }
+  

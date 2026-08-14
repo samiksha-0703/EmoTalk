@@ -1,0 +1,336 @@
+.home-page {
+  min-height: 100vh;
+  padding-bottom: 90px; /* space for bottom navbar */
+  background: #ffffff;
+}
+
+/* Header */
+.home-title {
+  padding: 20px 30px;
+}
+
+.home-title h1 {
+  margin: 0;
+  color: #10b981;
+  font-size: 26px;
+}
+
+.home-title p {
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+/* Center Section */
+.center-content {
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.instruction-text {
+  max-width: 480px;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* Mic Container */
+.mic-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Mic Button */
+.mic-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: none;
+  background: #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: visible;
+}
+
+.mic-circle:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.mic-circle:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mic-circle.has-result {
+  transform: scale(1.1);
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+}
+
+/* Recording Pulse */
+.mic-circle.recording {
+  animation: pulse 1.2s infinite;
+  background: #ef4444;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 25px rgba(239, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+.pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  animation: ripple 1.5s infinite;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.emotion-emoji-large {
+  font-size: 48px;
+}
+
+/* Recording Info */
+.recording-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.recording-duration {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ef4444;
+  font-variant-numeric: tabular-nums;
+}
+
+.recording-waveform {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+}
+
+.wave-bar {
+  width: 4px;
+  height: 10px;
+  background: #ef4444;
+  border-radius: 2px;
+  animation: wave 1s infinite;
+}
+
+@keyframes wave {
+  0%, 100% {
+    height: 10px;
+  }
+  50% {
+    height: 30px;
+  }
+}
+
+.tap-text {
+  margin-top: 16px;
+  color: #6b7280;
+}
+
+/* Audio Section */
+.audio-section {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.audio-player {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Analyze Button */
+.analyze-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.analyze-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.analyze-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading State */
+.loading-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #10b981;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Error Message */
+.error-message {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #991b1b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 400px;
+  font-size: 14px;
+}
+
+.error-icon {
+  font-size: 18px;
+}
+
+.error-dismiss {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #991b1b;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.error-dismiss:hover {
+  background: rgba(153, 27, 27, 0.1);
+}
+
+/* 🌈 EMOTION RESULT CARD (UPDATED) */
+.emotion-result {
+  margin-top: 26px;
+  padding: 26px 30px;
+  background: linear-gradient(180deg, #ffffff, #f0fdf9);
+  border-radius: 22px;
+  box-shadow: 0 18px 35px rgba(16, 185, 129, 0.15);
+  text-align: center;
+  animation: fadeUp 0.45s ease;
+  min-width: 260px;
+  border: 3px solid;
+}
+
+/* Emoji */
+.emotion-emoji {
+  font-size: 56px;
+  margin-bottom: 6px;
+}
+
+/* Emotion name */
+.emotion-name {
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+/* Confidence */
+.emotion-confidence {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+/* Confidence Bar */
+.confidence-bar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.confidence-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 4px;
+}
+
+/* ✨ Animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

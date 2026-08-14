@@ -1,0 +1,107 @@
+.auth-page {
+    min-height: 100vh;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Brand */
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .leaf-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #16a34a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
+  }
+  
+  .brand-name {
+    margin-top: 12px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #14532d;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Card */
+  .auth-card {
+    width: 360px;
+    background: white;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+  }
+  
+  .auth-card h2 {
+    font-size: 22px;
+    margin-bottom: 6px;
+    color: #0f172a;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 20px;
+  }
+  
+  .auth-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .auth-card input {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+  }
+  
+  .auth-card input:focus {
+    outline: none;
+    border-color: #16a34a;
+  }
+  
+  .auth-card button {
+    margin-top: 6px;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: #16a34a;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .auth-card button:hover {
+    background: #15803d;
+  }
+  .switch-text {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #475569;
+  }
+  
+  .switch-text a {
+    color: #16a34a;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .switch-text a:hover {
+    text-decoration: underline;
+  }
+  

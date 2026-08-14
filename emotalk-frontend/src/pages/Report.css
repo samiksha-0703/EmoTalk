@@ -1,0 +1,128 @@
+/* PAGE */
+.daily-report-page {
+  max-width: 900px;
+  margin: auto;
+  padding: 32px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fafc, #ffffff);
+  font-family: "Inter", sans-serif;
+}
+
+/* HEADER */
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 28px;
+}
+
+/* BUTTON */
+.generate-btn {
+  padding: 14px 22px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.generate-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+.generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* STATUS */
+.status {
+  margin-top: 18px;
+  color: #374151;
+}
+
+/* REPORT CARD */
+.report-card {
+  margin-top: 36px;
+  display: grid;
+  gap: 22px;
+}
+
+/* EMOTION CARD */
+.emotion-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: white;
+  padding: 24px;
+  border-radius: 22px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+.emotion-emoji {
+  font-size: 54px;
+}
+
+.emotion-name {
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+/* INFO CARDS */
+.info-card {
+  padding: 22px;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.07);
+}
+
+.info-card h4 {
+  margin-bottom: 10px;
+}
+
+.info-card p {
+  color: #374151;
+  line-height: 1.6;
+}
+
+.info-card.insight {
+  background: linear-gradient(180deg, #ecfeff, #ffffff);
+}
+
+.info-card.suggestion {
+  background: linear-gradient(180deg, #f0fdf4, #ffffff);
+}
+
+/* ANIMATION */
+.fade-in {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* WEEKLY REPORT BUTTON */
+.weekly-btn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+.weekly-btn:hover {
+  background: #1d4ed8;
+}
