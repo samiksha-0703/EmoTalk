@@ -23,7 +23,6 @@ import jwt
 from jwt import PyJWTError
 from passlib.context import CryptContext
 
-from app.core.hf_model_loader import model_loader
 from app.core.config import (
     MAX_FILE_SIZE_MB,
     ALLOWED_AUDIO_TYPES,
@@ -31,7 +30,18 @@ from app.core.config import (
     JWT_ALGORITHM,
     JWT_EXPIRATION_MINUTES,
     API_V1_PREFIX,
+    MODEL_TYPE,
 )
+
+# ── Model loader: selected via MODEL_TYPE env var ─────────────────────────────
+if MODEL_TYPE == "custom":
+    from app.core.model_loader import model_loader
+    logger_setup = logging.getLogger(__name__)
+    logger_setup.info("Using custom CNN+LSTM model (MODEL_TYPE=custom)")
+else:
+    from app.core.hf_model_loader import model_loader
+    logger_setup = logging.getLogger(__name__)
+    logger_setup.info("Using HuggingFace wav2vec2 model (MODEL_TYPE=huggingface)")
 from app.services.database import (
     get_history,
     save_emotion,
@@ -208,12 +218,13 @@ async def predict(file: UploadFile = File(...), current_user: Dict[str, Any] = D
             f"| Time: {total_time:.2f}s | File: {file_size_mb:.2f}MB"
         )
         
-        # Save to database
+        # Save to database (scoped to authenticated user)
         try:
             save_emotion(
                 emotion,
                 confidence,
-                datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+                datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+                user_id=current_user["id"],
             )
             logger.debug("Emotion saved to database")
         except Exception as db_error:
@@ -248,12 +259,12 @@ async def predict(file: UploadFile = File(...), current_user: Dict[str, Any] = D
 @router.get("/emotion-history")
 def emotion_history(current_user: Dict[str, Any] = Depends(get_current_user)):
     """
-    Get all emotion history records.
-    
-    Returns list of all recorded emotions with timestamps and confidence scores.
+    Get emotion history records for the authenticated user.
+
+    Returns list of recorded emotions with timestamps and confidence scores.
     """
     try:
-        history = get_history()
+        history = get_history(user_id=current_user["id"])
         return {"data": history, "count": len(history)}
     except Exception as e:
         logger.error(f"Error fetching emotion history: {str(e)}", exc_info=True)
@@ -267,7 +278,7 @@ def emotion_history(current_user: Dict[str, Any] = Depends(get_current_user)):
 # ===============================
 @router.get("/daily-report")
 def daily_report(current_user: Dict[str, Any] = Depends(get_current_user)):
-    history = get_history()
+    history = get_history(user_id=current_user["id"])
     today = datetime.utcnow().date().isoformat()
 
     today_records = [
@@ -326,7 +337,7 @@ def daily_report(current_user: Dict[str, Any] = Depends(get_current_user)):
 # ===============================
 @router.get("/weekly-report")
 def weekly_report(current_user: Dict[str, Any] = Depends(get_current_user)):
-    history = get_history()
+    history = get_history(user_id=current_user["id"])
     today = datetime.utcnow().date()
 
     days = [(today - timedelta(days=i)) for i in range(6, -1, -1)]

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getWeeklyReport } from "../services/historyApi";
 import "./WeeklyReport.css";
 
 const emotionEmojiMap = {
@@ -36,8 +37,7 @@ export default function WeeklyReport() {
     setReport(null);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/weekly-report");
-      const data = await res.json();
+      const data = await getWeeklyReport();
 
       if (data.error || !data.report) {
         setMessage("⚠️ Unable to generate weekly report.");

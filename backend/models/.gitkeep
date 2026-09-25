@@ -1,0 +1,7 @@
+# This file keeps the models/ directory tracked by git.
+# Place your trained model files here:
+#   emotion_model.h5    — trained Keras CNN+LSTM model (from ai_core/train.py)
+#   label_encoder.pkl   — fitted sklearn LabelEncoder  (from ai_core/train.py)
+#
+# These files are intentionally excluded from git (see /.gitignore).
+# To activate the custom model: set MODEL_TYPE=custom in backend/.env

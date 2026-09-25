@@ -1,8 +1,13 @@
 """
-Prediction Service
+Prediction Service — Custom CNN+LSTM Feature Pipeline
+------------------------------------------------------
+NOTE: This file is the feature extraction reference for the custom
+      CNN+LSTM model (ai_core/). It is NOT used when MODEL_TYPE=huggingface
+      (the default). Switch to MODEL_TYPE=custom in .env to activate it.
 
-Handles audio feature extraction and emotion prediction.
-Separated from routes for better code organization and reusability.
+This pipeline extracts MFCC + RMS time-series features shaped (130, 41)
+which is the input format for the more detailed backend model variant.
+The simpler training pipeline in ai_core/features.py uses mean-MFCC (40,).
 
 TODO: Add support for real-time streaming prediction
 TODO: Add audio quality validation
@@ -13,7 +18,7 @@ import numpy as np
 import os
 
 from app.core.config import SAMPLE_RATE, DURATION, N_MFCC, MAX_PAD_LEN
-from app.core.model_loader import model_loader
+from app.core.model_loader import model_loader  # custom TF loader
 
 logger = logging.getLogger(__name__)
 

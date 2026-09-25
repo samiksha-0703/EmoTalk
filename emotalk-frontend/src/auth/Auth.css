@@ -104,4 +104,26 @@
   .switch-text a:hover {
     text-decoration: underline;
   }
-  
+
+  /* Error banner shown on login/signup failure */
+  .auth-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+
+  /* Disabled states during loading */
+  .auth-card input:disabled {
+    background: #f1f5f9;
+    cursor: not-allowed;
+  }
+
+  .auth-card button:disabled {
+    background: #86efac;
+    cursor: not-allowed;
+  }

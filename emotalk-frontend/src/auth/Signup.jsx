@@ -1,22 +1,39 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { signup as signupApi } from "../services/authApi";
 import "./Auth.css";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signup } = useAuth();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
 
-    // Create account
-    signup(email);
+    try {
+      // Call the real backend — returns { access_token, token_type }
+      const data = await signupApi(email, password);
 
-    // Redirect to Home
-    navigate("/", { replace: true });
+      // Immediately log the user in after signup (token is returned on registration)
+      login(email, data.access_token);
+
+      navigate("/", { replace: true });
+    } catch (err) {
+      const message =
+        err.response?.data?.detail ||
+        "Signup failed. Please try again.";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -46,6 +63,12 @@ export default function Signup() {
         <h2>Create account</h2>
         <p className="subtitle">Start tracking your emotional journey</p>
 
+        {error && (
+          <div className="auth-error" role="alert">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -53,6 +76,7 @@ export default function Signup() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
           />
 
           <input
@@ -61,9 +85,12 @@ export default function Signup() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
           />
 
-          <button type="submit">Sign Up</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Creating account..." : "Sign Up"}
+          </button>
         </form>
 
         {/* Switch */}

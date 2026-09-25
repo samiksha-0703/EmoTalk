@@ -1,0 +1,38 @@
+# EmoTalk Backend — Python dependencies
+# Target: Python 3.12 (developed/validated on CPython 3.12.4)
+#
+# This file covers the FastAPI backend and its runtime inference stack.
+# The runtime path is: app.main -> app.api.routes -> app.core.hf_model_loader
+#                                                 -> app.services.{database,gemini}
+#
+# Inference uses PyTorch + HuggingFace Transformers (superb/wav2vec2-base-superb-er),
+# NOT TensorFlow. The TensorFlow training pipeline lives in ai_core/ and has its
+# own requirements file (see ai_core/requirements.txt).
+
+# --- Web framework / API server ---
+fastapi>=0.110,<1.0          # FastAPI, CORSMiddleware, APIRouter, UploadFile, Depends (app.main, app.api.routes)
+uvicorn[standard]>=0.27,<1.0 # ASGI server used to run the app: `uvicorn app.main:app`
+python-multipart>=0.0.9      # Required by FastAPI to parse multipart/form-data uploads (UploadFile/File in /predict)
+pydantic[email]>=2.5,<3.0    # BaseModel + EmailStr response/request models (app.api.routes); [email] pulls email-validator
+python-dotenv>=1.0,<2.0      # load_dotenv() reads backend/.env into environment (app.core.config)
+
+# --- Authentication ---
+PyJWT>=2.8,<3.0              # `import jwt` / PyJWTError — JWT encode/decode (app.api.routes)
+passlib>=1.7.4,<2.0         # CryptContext password hashing (app.api.routes)
+bcrypt>=4.0.1,<4.2          # bcrypt backend used by passlib's "bcrypt" scheme
+
+# --- Audio / ML inference ---
+torch>=2.2,<3.0             # Model tensors + inference (app.core.hf_model_loader)
+transformers>=4.38,<5.0    # AutoFeatureExtractor, AutoModelForAudioClassification (app.core.hf_model_loader)
+librosa>=0.10,<0.11        # Audio loading / feature extraction (app.core.hf_model_loader, app.services.prediction)
+pydub>=0.25,<0.26          # AudioSegment decoding via FFmpeg (app.core.hf_model_loader)
+numpy>=1.26,<2.0           # Numerical arrays used across audio processing; pinned <2.0 for numba/librosa compatibility
+
+# --- Google Gemini insights ---
+google-generativeai>=0.5,<1.0  # genai.configure / GenerativeModel (app.services.gemini)
+
+# NOTE:
+# - pydub also needs the FFmpeg binary present on the system (not a pip package).
+# - `requests` is used only by the standalone dev utility backend/list_models.py;
+#   it is installed transitively by transformers/google-generativeai, so it is not
+#   pinned here as a first-class backend dependency.

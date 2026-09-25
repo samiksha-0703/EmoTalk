@@ -1,22 +1,39 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { login as loginApi } from "../services/authApi";
 import "./Auth.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
 
-    // Authenticate user
-    login(email);
+    try {
+      // Call the real backend — returns { access_token, token_type }
+      const data = await loginApi(email, password);
 
-    // Redirect to Home
-    navigate("/", { replace: true });
+      // Persist token + email in context (and localStorage via AuthContext)
+      login(email, data.access_token);
+
+      navigate("/", { replace: true });
+    } catch (err) {
+      const message =
+        err.response?.data?.detail ||
+        "Login failed. Please check your credentials.";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -46,6 +63,12 @@ export default function Login() {
         <h2>Welcome back</h2>
         <p className="subtitle">Sign in to continue your journey</p>
 
+        {error && (
+          <div className="auth-error" role="alert">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -53,6 +76,7 @@ export default function Login() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
           />
 
           <input
@@ -61,14 +85,17 @@ export default function Login() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
           />
 
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Signing in..." : "Login"}
+          </button>
         </form>
 
         {/* Switch */}
         <p className="switch-text">
-          Don’t have an account? <Link to="/signup">Sign up</Link>
+          Don't have an account? <Link to="/signup">Sign up</Link>
         </p>
       </div>
     </div>

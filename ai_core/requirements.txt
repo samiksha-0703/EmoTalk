@@ -1,0 +1,21 @@
+# EmoTalk AI Core — model training pipeline dependencies
+# Target: Python 3.12
+#
+# This is a SEPARATE dependency set from backend/requirements.txt.
+#
+# Why separate:
+#   ai_core/ is a standalone training pipeline (train.py, model.py, features.py,
+#   config.py) that builds the emotion model with TensorFlow/Keras + scikit-learn.
+#   The backend never imports ai_core, and the backend's runtime inference uses
+#   PyTorch + HuggingFace Transformers instead. Combining a full TensorFlow stack
+#   and a full PyTorch stack in one environment is heavy and invites version
+#   conflicts, so each concern keeps its own file.
+#
+# Install only when (re)training the model, e.g. inside ai_core/:
+#   python -m venv .venv && .venv/Scripts/activate
+#   pip install -r requirements.txt
+
+tensorflow>=2.16,<2.17   # tensorflow.keras Sequential/Conv1D/LSTM/to_categorical (model.py, train.py); 2.16 is the first TF release supporting Python 3.12
+scikit-learn>=1.4,<2.0   # train_test_split, LabelEncoder (train.py)
+librosa>=0.10,<0.11      # Audio loading + MFCC feature extraction (features.py); uses sndfile backend by default
+numpy>=1.26,<2.0         # Feature arrays (features.py, train.py); <2.0 for TensorFlow 2.16 + librosa compatibility

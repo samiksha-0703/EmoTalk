@@ -57,13 +57,21 @@ apiClient.interceptors.response.use(
     if (error.response) {
       // Server responded with error status
       const { status, data } = error.response;
-      
+
       if (status === 401) {
-        // Unauthorized - clear auth and redirect
+        // JWT expired or invalid — clear session and send user to login.
+        // We use window.location because this module is outside React and
+        // doesn't have access to useNavigate.
         localStorage.removeItem("auth_token");
-        // TODO: Redirect to login
+        localStorage.removeItem("auth_email");
+
+        // Avoid redirect loops if we're already on an auth page
+        const onAuthPage = ["/login", "/signup"].includes(window.location.pathname);
+        if (!onAuthPage) {
+          window.location.href = "/login";
+        }
       }
-      
+
       console.error(`[API Error] ${error.config?.url}`, {
         status,
         message: data?.detail || data?.message || "Unknown error",
@@ -75,7 +83,7 @@ apiClient.interceptors.response.use(
       // Error setting up request
       console.error("[API Error] Request setup failed", error.message);
     }
-    
+
     return Promise.reject(error);
   }
 );

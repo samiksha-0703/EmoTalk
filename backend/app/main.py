@@ -14,8 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import router
 from app.services.database import create_table
-from app.core.hf_model_loader import model_loader
-from app.core.config import CORS_ORIGINS, API_V1_PREFIX
+from app.core.config import CORS_ORIGINS, API_V1_PREFIX, MODEL_TYPE
 import os
 
 # Configure logging
@@ -49,31 +48,35 @@ app.add_middleware(
 async def startup():
     """
     Startup event handler.
-    Initializes database and loads ML model.
+    Initializes database and verifies ML model loaded correctly.
     """
     logger.info("🚀 Starting EmoTalk API...")
-    
+
+    # Initialize database
     try:
-        # Initialize database
         logger.info("Initializing database...")
         create_table()
         logger.info("✅ Database initialized")
-        
-        # Load ML model
-        logger.info("Loading emotion recognition model...")
-        success, error = True, None
-        
-        if not success:
-            logger.error(f"❌ Failed to load model: {error}")
-            logger.error("API will start but prediction endpoints will fail")
-            # Don't raise - allow API to start for health checks
-        else:
-            logger.info("✅ Model loaded successfully")
-            
     except Exception as e:
-        logger.error(f"❌ Startup error: {str(e)}", exc_info=True)
-        # Continue startup - some endpoints may still work
-    
+        logger.error(f"❌ Database initialization failed: {e}", exc_info=True)
+        # Don't raise — API can still serve non-DB endpoints
+
+    # Verify the model loader that was selected via MODEL_TYPE
+    logger.info(f"Active model type: {MODEL_TYPE}")
+    if MODEL_TYPE == "custom":
+        from app.core.model_loader import model_loader
+    else:
+        from app.core.hf_model_loader import model_loader
+
+    if model_loader.is_loaded:
+        logger.info("✅ Emotion recognition model loaded and ready")
+    else:
+        logger.error(
+            "❌ Emotion recognition model failed to load. "
+            "Prediction endpoints will return 503 until resolved. "
+            "Check logs above for the specific error."
+        )
+
     logger.info("✅ EmoTalk API started successfully")
 
 
@@ -87,7 +90,6 @@ async def shutdown():
 app.include_router(router, prefix=API_V1_PREFIX)
 
 # Include debug routes (development only)
-# TODO: Disable in production using environment variable
 if os.getenv("ENVIRONMENT", "development") == "development":
     try:
         from app.api.debug_routes import router as debug_router
@@ -104,8 +106,15 @@ async def health_check():
     Health check endpoint.
     Returns API status and model loading status.
     """
+    if MODEL_TYPE == "custom":
+        from app.core.model_loader import model_loader
+    else:
+        from app.core.hf_model_loader import model_loader
+
     return {
         "status": "healthy",
+        "model_type": MODEL_TYPE,
         "model_loaded": model_loader.is_loaded,
         "version": "1.0.0"
     }
+

@@ -64,10 +64,17 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Set environment variables (create `.env` file):
+4. Set environment variables. Create a local `.env` file inside `backend/` by
+   copying the provided template, then add your own Gemini API key. This `.env`
+   file is git-ignored and must never be committed.
+```bash
+cp .env.example .env   # On Windows: copy .env.example .env
+```
+Then edit `backend/.env` and set your key:
 ```
 GEMINI_API_KEY=your_api_key_here
 ```
+Get a key from https://aistudio.google.com/app/apikey
 
 5. Run the server:
 ```bash

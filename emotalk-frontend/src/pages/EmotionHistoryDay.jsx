@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { getEmotionHistory } from "../services/historyApi";
 import "./History.css";
 
 const emotionMap = {
@@ -26,8 +27,7 @@ export default function HistoryByDate() {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/emotion-history")
-      .then((res) => res.json())
+    getEmotionHistory()
       .then((data) => {
         const filtered = data
           .filter(

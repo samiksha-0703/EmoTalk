@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getEmotionHistory } from "../services/historyApi";
 import "./Calendar.css";
 
 export default function Calendar() {
@@ -12,8 +13,7 @@ export default function Calendar() {
 
   // ================= FETCH EMOTION HISTORY =================
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/emotion-history")
-      .then((res) => res.json())
+    getEmotionHistory()
       .then((data) => {
         const map = {};
 

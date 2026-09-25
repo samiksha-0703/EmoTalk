@@ -18,6 +18,11 @@ dist-ssr/
 *.local
 .expo/
 
+# Local env files (keep the committable template)
+.env
+.env.*
+!.env.example
+
 ############################
 # Python / Backend
 ############################

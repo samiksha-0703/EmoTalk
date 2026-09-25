@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ ADD
+import { getDailyReport } from "../services/historyApi";
 import "./Report.css";
 
 const emotionConfig = {
@@ -26,8 +27,7 @@ export default function Report() {
     setMessage("Generating your daily report…");
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/daily-report");
-      const data = await res.json();
+      const data = await getDailyReport();
 
       if (data.error || !data.report) {
         setMessage("⚠️ Unable to generate report right now.");

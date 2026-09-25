@@ -6,6 +6,7 @@
  * 
  * TODO: Remove or disable in production build
  */
+import { API_CONFIG } from "../config/api";
 
 /**
  * Test API connection
@@ -18,7 +19,7 @@ export async function testApiConnection() {
   console.log("🔍 Testing API connection...");
   
   try {
-    const response = await fetch("http://127.0.0.1:8000/health");
+    const response = await fetch(`${API_CONFIG.baseURL}/health`);
     const data = await response.json();
     
     if (data.status === "healthy") {
@@ -32,7 +33,7 @@ export async function testApiConnection() {
     }
   } catch (error) {
     console.error("❌ API connection failed:", error.message);
-    console.error("   Check if backend is running on http://127.0.0.1:8000");
+    console.error(`   Check if backend is running on ${API_CONFIG.baseURL}`);
     return false;
   }
 }
@@ -44,7 +45,7 @@ export async function testDebugEndpoint() {
   console.log("🔍 Testing debug endpoint...");
   
   try {
-    const response = await fetch("http://127.0.0.1:8000/debug/status");
+    const response = await fetch(`${API_CONFIG.baseURL}/debug/status`);
     const data = await response.json();
     
     console.log("✅ Debug endpoint response:", data);

@@ -1,18 +1,72 @@
-# Python virtual environment
-venv/
-backend/venv/
+# ============================================================
+# EmoTalk — Root .gitignore
+# ============================================================
 
-# Python cache
+# ─── Python ──────────────────────────────────────────────────
+# Virtual environments
+venv/
+.venv/
+env/
+backend/venv/
+backend/.venv/
+
+# Bytecode & caches
 __pycache__/
 *.py[cod]
+*.pyo
+.mypy_cache/
+.ruff_cache/
 
-# Environment variables
+# ─── Environment / Secrets ───────────────────────────────────
+# NEVER commit real .env files
 .env
 .env.*
+!.env.example          # keep the safe, secret-free template
 
-# Node dependencies
+# ─── Database ────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ─── Temp Audio Files ────────────────────────────────────────
+# FastAPI writes uploaded audio to backend/ root while processing
+*.wav
+*.mp3
+*.webm
+*.m4a
+*.ogg
+tmp_audio_*
+
+# ─── ML Model Files ──────────────────────────────────────────
+# Trained model artefacts — large binary files, don't commit
+backend/models/*.h5
+backend/models/*.pkl
+backend/models/*.pt
+backend/models/*.pth
+ai_core/*.h5
+ai_core/*.pkl
+
+# HuggingFace model cache (downloaded at runtime, can be hundreds of MB)
+.cache/huggingface/
+backend/.cache/
+
+# ─── Node / Frontend ─────────────────────────────────────────
 node_modules/
-
-# Build files
+emotalk-frontend/node_modules/
 dist/
 build/
+.vite/
+emotalk-frontend/dist/
+emotalk-frontend/.vite/
+
+# ─── OS / Editor ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ─── Logs ────────────────────────────────────────────────────
+*.log
+logs/

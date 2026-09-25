@@ -1,0 +1,12 @@
+# This file keeps the data/ directory tracked by git.
+# Place the RAVDESS dataset here to train the custom model:
+#
+#   data/RAVDESS/
+#     Actor_01/
+#       03-01-01-01-01-01-01.wav
+#       ...
+#     Actor_02/
+#       ...
+#
+# Download: https://zenodo.org/record/1188976
+# Then run: python train.py  (from ai_core/ directory)
